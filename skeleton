@@ -1,7 +1,9 @@
-- tabella di dipendenti con nome, cognome, data di nascita, età, sesso, data di assunzione, stipendio all'ora, employee_id
-- tabella con employee_id, specializzazione
-- tabella con ore di lavoro di 2 anni con equivalente stipendio mensile, employee_id (magari utilizzare un'altra foreign key), richieste di ferie/malattia
-- tabella con richieste di ferie potrebbe essere messa a parte ed essere usata per i join e i tipi che non hanno mai fatto richiesta lasciare valore nullo
+- tabella di dipendenti con nome, cognome, data di nascita, età, sesso e employee_id
+- tabella con employee_id, specializzazione, , data di assunzione, stipendio all'ora
+
+
+
+- tabella con ore di lavoro di 2 anni con equivalente stipendio mensile, employee_id 
 - tabella con supervisori dei lavoratori (10) supervisor_id, che sarebbe un employye_id nella tabella principale. specializzazione. assegnare un supervisor  
   ai lavoratori in base alla specializzazione e trovare un modo di aggiungere una colonna con valutazione lavoro da 1 (da licenziare) a 5 (da premiare)
 
@@ -17,3 +19,159 @@ AGGIUNGERE FORSE L'ATTRITION RATE
 - valutare in generale il lavoro delle persone e capire se c'è bisogno di far fuori e di conseguenza assumere personale
  
  
+
+
+
+use SQLproject;
+
+CREATE TABLE employees(
+
+    worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	firstname NVARCHAR(50) NOT NULL,
+	dateofbirth NVARCHAR(50) NOT NULL,
+	age INT NOT NULL,
+	lastname NVARCHAR(50) NOT NULL,
+	gender NVARCHAR(50),
+
+)
+
+
+
+CREATE TABLE workersdetails(
+   
+    worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	hiringday NVARCHAR(10),
+	hiringmonth NVARCHAR(50),
+	hourlypay DECIMAL(4,2),
+	hiringyear INT
+
+)
+
+
+
+
+CREATE TABLE supervisors(
+
+    supervisor_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	worker_ID INT,
+	firstname NVARCHAR(50),
+	lastname NVARCHAR(50)
+
+)
+
+
+-- add the job types
+
+ALTER TABLE supervisors
+ADD CONSTRAINT fk_worker
+FOREIGN KEY (worker_ID) REFERENCES employees(worker_ID)
+
+ALTER TABLE workersdetails
+ADD profession NVARCHAR(100) NOT NULL
+
+
+ALTER TABLE workersdetails
+ADD CONSTRAINT fk_workers
+FOREIGN KEY (worker_ID) REFERENCES employees(worker_ID)
+
+
+
+SELECT *
+FROM employees
+
+SELECT *
+FROM workersdetails
+
+SELECT *
+FROM supervisors
+
+
+
+
+
+
+
+
+INSERT INTO employees
+VALUES ('Thomas', '07/09/1970', 52, 'Martinez',),
+       ('James', '12/01/1973', 50, 'Anderson',),
+	     ('Jack', '12/04/1972', 51, 'Jackson',),
+	     ('Daniel', '03/06/1968', 55, 'Martin',),
+	     ('Matthew', '05/03/1975', 48, 'Lee',),
+	     ('Ryan', '02/05/1973', 50, 'Sanchez',),
+	     ('Joshua', '14/04/1974', 49, 'Clark',),
+	     ('Luke', '04/01/1973', 50, 'Ramirez',),
+	     ('Samuel', '08/12/1975', 47, 'Howard',),
+	     ('Joyce', '26/12/1970', 52, 'Richardson',),
+	     ('Michael', '13/09/1970', 52, 'Bennett',),
+       ('Adam', '21/12/1972', 50, Gray',),
+	     ('William', '13/03/1967', 56, 'Price',),
+	     ('Matthew', '24/09/1987', 35, 'Sanders',),
+	     ('George', '12/02/1984', 39, 'Foster',),
+	     ('Aaron', '21/10/1970', 52, 'Walker',),
+	     ('Carol', '31/07/1975', 47, 'Young',),
+	     ('Valerie', '29/05/1971', 52, 'Adams',),
+	     ('Toby', '25/01/1969', 54, 'Campbell',),
+	     ('Louis', '11/09/1975', 47, 'Gomez',),
+	     ('Henry', '11/11/1987', 35, 'Turner',),
+       ('Bobby', '04/01/1970', 53, 'Stewart',),
+  	   ('Mark', '11/07/1972', 50, 'Murphy',),
+  	   ('Anne', '22/03/1969', 54, 'Peterson',),
+	     ('Jason', '20/05/1974', 49, 'Jordan',),
+	     ('Brandon', '06/08/1992', 30, 'Simmons',),
+	     ('Jacob', '20/09/1987', 35,),
+	     ('Peter', '27/11/1981', 41,),
+	     ('Mario', '28/04/1992', 31,),
+	     ('Mohammed', '26/10/1998', 24, 'Bakir'),
+	     ('Helen', '18/01/1987', 36,),
+       ('Ben', '11/05/1980', 43),
+	     ('Wendy', '22/05/1985', 38,),
+	     ('Carl', '07/09/1978', 44,),
+	     ('Max', '10/09/1987', 35,),
+	     ('Patrick', '27/09/1989', 33,),
+	     ('Peter', '21/09/1983', 39,),
+	     ('Marika', '09/04/1997', 26,),
+	     ('Frederik', '18/05/1990', 33,),
+	     ('Philip', '03/03/1973', 50,),
+	     ('Denis', '20/02/1980', 43,),
+       ('Owen', '14/02/1979', 44,),
+	     ('Richard', '05/02/1989', 34),
+	     ('Tommy', '19/11/1983', 39,),
+	     ('William', '15/06/1996', 27,),
+	     ('George', '21/11/1986', 36, 'Foster',),
+	     ('Barbara', '22/08/1973', 49,),
+	     ('Elliot', '16/11/1972', 50,),
+	     ('Dean', '18/03/1968', 55,),
+	     ('Thomas', '27/01/1992', 31,),
+	     ('Chris', '09/04/1989', 34,),
+       ('Jacob', '08/01/1982', 41,),
+  	   ('Sarah', '21/11/1986', 36,),
+	     ('Ryan', '25/03/1969', 54,),
+	     ('Anne', '15/06/1996', 27,),
+  	   ('Simon', '06/09/1980', 42,),
+	     ('Simon', '27/01/1992', 31,),
+	     ('Sebastian', '21/12/1973', 49,),
+  	   ('Billy', '09/04/1989', 34,),
+	     ('Markus', '18/05/1990', 33,),
+	     ('Dylan', '19/11/1983', 39,),
+       ('Paul', '15/06/1996', 27,),
+  	   ('Craig', '21/11/1986', 36,),
+	     ('Patrick', '05/12/1988', 34,),
+	     ('Omar', '21/12/1973', 49,),
+  	   ('Tommy', '25/01/1988', 35,),
+	     ('Ryan', '06/06/1999', 24,),
+	     ('Samantha', '18/05/1983', 40,),
+  	   ('Ali', '13/04/1977', 46,),
+	     ('James', '05/08/1986', 36,),
+	     ('Robert', '12/07/1999', 23,),
+       ('Jack', '09/05/1968', 55,),
+	     ('Cameron', '14/02/1997', 26,),
+	     ('Joel', '21/05/1988', 35,),
+	     ('Martin', '03/06/1980', 43,),
+	     ('Stuart', '30/04/1973', 50,)
+       
+       
+       
+       
+       
+       
