@@ -37,13 +37,14 @@ CREATE TABLE employees(
 
 
 
-CREATE TABLE workersdetails(
+CREATE TABLE edetails(
    
     worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	hiringday NVARCHAR(10),
 	hiringmonth NVARCHAR(50),
 	hourlypay DECIMAL(4,2),
-	hiringyear INT
+	hiringyear INT,
+	profession NVARCHAR(100) NOT NULL
 
 )
 
@@ -70,9 +71,7 @@ ALTER TABLE workersdetails
 ADD profession NVARCHAR(100) NOT NULL
 
 
-ALTER TABLE workersdetails
-ADD CONSTRAINT fk_workers
-FOREIGN KEY (worker_ID) REFERENCES employees(worker_ID)
+
 
 
 
@@ -177,86 +176,99 @@ VALUES ('Thomas', '07/09/1970', 52, 'Martinez', 'Male'),
 
 
 
+INSERT INTO dbo.edetails
+VALUES ('12', '08', 19.25, '2018', 'Painter'),
+       ('13', '08', 20.12, '2019', 'Carpenter'),
+       ('24', '01', 19.25, '2021', 'Electrician'),
+       ('02', '04', 19.25, '2018', 'Carpenter'),
+       ('14', '03', 18.45, '2020', 'Plumber'),
+       ('13', '08', 16.24, '2019', 'Construction Worker'),
+       ('03', '12', 18.45, '2018', 'Plumber'),
+       ('28', '02', 16.24, '2018', 'Construction Worker'),
+       ('12', '08', 25.35, '2018', 'Project Manager'),
+       ('24', '01', 18.25, '2021', 'Painter'),
+       ('13', '08', 19.25, '2019', 'Electrician'),
+       ('24', '01', 18.25, '2021', 'Painter'),
+       ('25', '02', 16.24, '2019', 'Construction Worker'),
+       ('16', '05', 19.25, '2018', 'Carpenter'),
+       ('12', '08', 18.25, '2018', 'Painter'),
+       ('16', '05', 16.24, '2018', 'Construction Worker'),
+       ('23', '11', 25.35, '2022', 'Project Manager'),
+       ('23', '07', 28.25, '2020', 'Architect'),
+       ('23', '11', 19.25, '2022', 'Carpenter'),
+       ('14', '03', 18.45, '2020', 'Plumber'),
+       ('12', '08', 28.25, '2018', 'Engineer'),
+       ('16', '05', 18.25, '2018', 'Painter',),
+       ('16', '05', 18.25, '2018', 'Painter'),
+       ('09', '12', 23.25, '2019', 'Safety Inspector'),
+       ('04', '09', 19.25, '2022', 'Carpenter'),
+       ('14', '03', 19.25, '2020', 'Carpenter'),
+       ('14', '03', 16.24, '2020', 'Construction Worker'),
+       ('12', '08', 20.45, '2018', 'Electrician'),
+       ('13', '08', 19.25, '2019', 'Carpenter'),
+       ('23', '11', 19.25, '2022', 'Electrician'),
+       ('18', '12', 23.25, '2029', 'Safety Inspector'),
+       ('25', '02', 16.24, '2019', 'Construction Worker'),
+       ('13', '08', 18.25, '2019', 'Painter'),
+       ('23', '11', 16.24, '2022', 'Construction Worker'),
+       ('12', '08', 28.25, '2018', 'Architect'),
+       ('18', '06', 16.24, '2022', 'Construction Worker'),
+       ('16', '05', 16.24, '2018', 'Construction Worker'),
+       ('11', '01', 28.25, '2018', 'Engineer'),
+       ('16', '05', 16.24, '2018', 'Construction Worker'),
+       ('13', '08', 16.24, '2019', 'Construction Worker'),
+       ('13', '08', 19.25, '2019', 'Carpenter'),
+       ('16', '05', 19.25, '2018', 'Carpenter'),
+       ('14', '03', 16.24, '2021', 'Construction Worker'),
+       ('24', '01', 16.24, '2021', 'Construction Worker'),
+       ('24', '02', 16.24, '2022', 'Construction Worker'),
+       ('24', '01', 19.25, '2019', 'Carpenter'),
+       ('12', '08', 13.15, '2018', 'Secretary'),
+       ('14', '03', 16.24, '2020', 'Construction Worker'),
+       ('01', '04', 16.24, '2021', 'Construction Worker'),
+       ('23', '11', 16.24, '2o22', 'Construction Worker'),
+       ('12', '08', 17.35, '2018', 'Construction Worker'),
+       ('03', '03', 16.24, '2018', 'Construction Worker'),
+       ('14', '05', 16.24, '2018', 'Construction Worker'),
+       ('24', '01', 18.45, '2021', 'Plumber'),
+       ('12', '08', 28.25, '2018', 'Architect'),
+       ('05', '05', 16.24, '2018', 'Construction Worker'),
+       ('14', '01', 16.24, '2018', 'Construction Worker'),
+       ('13', '08', 16.24, '2019', 'Construction Worker'),
+       ('14', '11', 16.24, '2018', 'Construction Worker'),
+       ('23', '11', 16.24, '2022', 'Construction Worker'),
+       ('12', '08', 16.24, '2018', 'Construction Worker'),
+       ('06', '10', 16.24, '2022', 'Construction Worker'),
+       ('21', '07', 28.25, '2022', 'Architect'),
+       ('23', '07', 16.24, '2018', 'Construction Worker'),
+       ('14', '03', 16.24, '2020', 'Construction Worker'),
+       ('17', '06', 16.24, '2021', 'Construction Worker'),
+       ('12', '08', 19.45, '2018', 'Plumber'),
+       ('12', '08', 15.15, '2018', 'Secretary'),
+       ('14', '11', 16.24, '2019', 'Construction Worker'),
+       ('17', '06', 18.25, '2022', 'Painter'),
+       ('13', '08', 16.24, '2019', 'Construction Worker'),
+       ('16', '05', 28.25, '2018', 'Engineer'),
+       ('12', '08', 17.35, '2018', 'Construction Worker'),
+       ('24', '01', 19.25, '2021', 'Electrician'),
+       ('14', '03', 19.25, '2020', 'Electrician'),
+       ('14', '03', 19.25, '2020', 'Carpenter')
+      
 
 
-INSERT INTO dbo.workersdetails
-VALUES ('12', '08',),
-       ('13', '08',),
-       (),
-       ('02', '04'),
-       (),
-       ('13', '08',),
-       (),
-       (),
-       ('12', '08',),
-       (),
-       ('13', '08',),
-       (),
-       (),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       (),
-       (),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       (),
-       (),
-       (),
-       (),
-       ('12', '08',),
-       ('13', '08',),
-       (),
-       ('18', '12',),
-       (),
-       ('13', '08',),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       (),
-       (),
-       ('13', '08',),
-       ('13', '08',),
-       (),
-       (),
-       (),
-       ('24', '02',),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       (),
-       ('12', '08',),
-       (),
-       ('14', '05'),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       ('13', '08',),
-       (),
-       (),
-       ('12', '08',),
-       ('06', '10',),
-       (),
-       (),
-       (),
-       (),
-       ('12', '08',),
-       ('12', '08',),
-       (),
-       (),
-       ('13', '08',),
-       (),
-       ('12', '08',),
-       (),
-       (),
-       (),
-       ()
+
+INSERT INTO dbo.supervisors
+VALUES (35, 'Max', 'Murphy', 'Architect'),
+       (59, 'Billy', 'Wright', 'Construction Worker'),
+	   (52, 'Jacob', 'Brown', 'Construction Worker')
+
+
+
+SELECT edetails.worker_ID, age, hourlypay, firstname, lastname
+FROM dbo.edetails JOIN  dbo.employees
+ON edetails.worker_ID = employees.worker_ID
+WHERE profession = 'Construction Worker' AND hiringyear = 2018
+ORDER BY age DESC
 
 
 
