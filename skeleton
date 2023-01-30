@@ -274,3 +274,11 @@ ORDER BY age DESC
 
 
 
+
+
+
+--creare una tabella con i worker_ID dei lavoratori, anno di assunzione, professione, rating da 1 a 5
+--il supervisor_ID che l'ha valutato
+--rating nullo per i lavoratori assunti nel 2022
+
+
