@@ -282,3 +282,134 @@ ORDER BY age DESC
 --rating nullo per i lavoratori assunti nel 2022
 
 
+
+
+CREATE TABLE qualityperformance (
+
+    worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	hiringyear NVARCHAR(50) NOT NULL,
+	wq_performance INT,
+	profession NVARCHAR(100),
+	supervisor_ID INT 
+
+)
+
+SELECT *
+FROM dbo.qualityperformance
+
+
+
+
+select profession, count(profession) as Nprofession
+from dbo.edetails
+group by profession
+order by Nprofession desc
+
+
+
+
+
+INSERT INTO dbo.qualityperformance
+VALUES ('2018', 4, 'Painter', 2)
+       ('2019', 4, 'Carpenter', 2),
+       ('2021', 4, 'Electrician', 7),
+       ('2018', 3, 'Carpenter', 1),
+       ('2020', 4, 'Plumber', 9),
+       ('2019', 3, 'Construction Worker', 5),
+       ('2018', 4, 'Plumber', 9),
+       ('2018', 3, 'Construction Worker', 6),
+       ('2018', NULL, 'Project Manager', NULL),
+       ('2021', 4, 'Painter', 8),
+       ('2019', 4, 'Electrician', 7),
+       ('2021', 3, 'Painter', 8),
+       ('2019', 3, 'Construction Worker', 12),
+       ('2018', 2, 'Carpenter', 1),
+       ('2018', 3, 'Painter', 8),
+       ('2018', 5, 'Construction Worker', 6),
+       ('2022', NULL, 'Project Manager', 2),
+       ('2020', 4, 'Architect', 10),
+       ('2022', NULL, NULL, 1),
+       ('2020', 4, 'Plumber', 9),
+       ('2018', 4, 'Engineer', 2),
+       ('2018', 4, 'Painter', 8),
+       ('2018', 3, 'Painter', 8),
+       ('2019', 4, 'Safety Inspector', 2),
+       ('2022', NULL, 'Carpenter', 1),
+       ('2020', 4, 'Carpenter', 1),
+       ('2020', 3, 'Construction Worker', 5),
+       ('2018', 3, 'Electrician', 2),
+       ('2019', 4, 'Carpenter', 1),
+       ('2022', NULL, 'Electrician', 7),
+       ('2019', 4, 'Safety Inspector', 3),
+       ('2019', 2, 'Construction Worker', 12),
+       ('2019', 2, 'Painter', 8),
+       ('2022', NULL, 'Construction Worker', 5),
+       ('2018', 4, NULL, 2),
+       ('2022', NULL, 'Construction Worker', 6),
+       ('2018', 4, 'Construction Worker', 6),
+       ('2018', 4, 'Engineer', 4),
+       ('2018', 4, 'Construction Worker', 11),
+       ('2019', 3, 'Construction Worker', 6),
+       ('2019', 3, 'Carpenter', 1),
+       ('2018', 4, 'Carpenter', 1),
+       ('2021', 4, 'Construction Worker', 11),
+       ('2021', 3, 'Construction Worker', 6),
+       ('2022', NULL, 'Construction Worker', 6),
+       ('2019', 4, 'Carpenter', 1),
+       ('2018', NULL, 'Secretary', NULL),
+       ('2020', 4, 'Construction Worker', 12),
+       ('2021', 4, 'Construction Worker', 11),
+       ('2022', NULL, 'Construction Worker', 11),
+       ('2018', 5, 'Construction Worker', 2),
+       ('2018', 5, 'Construction Worker', 2),
+       ('2018', 3, 'Construction Worker', 12),
+       ('2021', 5, 'Plumber', 9),
+       ('2018', 4, 'Architect', 10),
+       ('2018', 5, 'Construction Worker', 11),
+       ('2018', 2, 'Construction Worker', 5),
+       ('2019', 4, 'Construction Worker', 5),
+       ('2018', 3, 'Construction Worker', 2),
+       ('2022', NULL, 'Construction Worker', 12),
+       ('2018', 4, 'Construction Worker', 11),
+       ('2022', NULL, 'Construction Worker', 12),
+       ('2022', NULL, 'Architect', 10),
+       ('2018', 4, 'Construction Worker', 6),
+       ('2020', 2, NULL, 12),
+       ('2021', 4, 'Construction Worker', 11),
+       ('2018', 5, 'Plumber', 2),
+       ('2018', NULL, 'Secretary', NULL),
+       ('2019', 4, 'Construction Worker', 5),
+       ('2022', NULL, 'Painter', 8),
+       ('2019', 3, 'Construction Worker', 5),
+       ('2018', 5, 'Engineer', 4),
+       ('2018', 4, 'Construction Worker', 2),
+       ('2021', 5, 'Electrician', 7),
+       ('2020', 3, 'Electrician', 7),
+       ('2020', 5, 'Carpenter', 1)
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+          
