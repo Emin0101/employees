@@ -272,9 +272,9 @@ ALTER TABLE dbo.employees
 ADD ageRange NVARCHAR(50)
 
 UPDATE dbo.employees
-SET ageRange = CASE WHEN age > 50 THEN 'olderW'
-                    WHEN age < 50 AND age > 40 THEN 'middleW'
-	                WHEN age < 40 AND age > 30 THEN 'adultW'
+SET ageRange = CASE WHEN age >= 50 THEN 'olderW'
+                    WHEN age < 50 AND age >= 40 THEN 'middleW'
+	                WHEN age < 40 AND age >= 30 THEN 'adultW'
 	                ELSE 'youngW'
 	                END 
 
@@ -295,37 +295,181 @@ GROUP BY gender AS gendercount  --11 donne e 65 uomini
 
 --vediamo le professioni in base a sesso dove i lavoratori sono over 50
 
-select *
-from dbo.qualityperformance
 
-SELECT ageRange, COUNT(ageRange) AS AgeCount, edetails.profession, COUNT(edetails.profession) AS ProfessionCount, wq_performance
+
+
+-- id 4 e 13 possibile licenziamento, vediamo per le altre fasce di età
+
+SELECT employees.worker_ID, firstname, lastname, gender, age, COUNT(ageRange) AS AgeCount, edetails.profession, 
+COUNT(edetails.profession) AS ProfessionCount, wq_performance, hourlypay, hiringyear
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
 JOIN dbo.qualityperformance
 ON employees.worker_ID = qualityperformance.worker_ID
-WHERE gender = 'female' AND ageRange = 'olderW'
-GROUP BY gender, ageRange, edetails.profession, wq_performance     -- 3 con 4 di performance
+WHERE ageRange = 'olderW' AND wq_performance < 4
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
+ORDER BY wq_performance DESC
+
+-- 7 da 3
 
 
-SELECT employees.worker_ID, ageRange, COUNT(ageRange) AS AgeCount, edetails.profession, COUNT(edetails.profession) AS ProfessionCount, wq_performance
+
+
+
+
+SELECT employees.worker_ID, firstname, lastname, gender, age, COUNT(ageRange) AS AgeCount, edetails.profession, 
+COUNT(edetails.profession) AS ProfessionCount, wq_performance, hourlypay, hiringyear
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
 JOIN dbo.qualityperformance
 ON employees.worker_ID = qualityperformance.worker_ID
-WHERE gender = 'male' AND ageRange = 'olderW'
-GROUP BY employees.worker_ID, ageRange, edetails.profession, wq_performance      -- 2 con 3 di valutazione  (4 e il 13)
+WHERE ageRange = 'middleW' AND wq_performance < 4
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
+ORDER BY wq_performance DESC
 
 
-SELECT employees.worker_ID, firstname, lastname, age, edetails.profession, hourlypay, hiringyear
+-- 3 persone con 3, 2 con 2
+
+SELECT employees.worker_ID, firstname, lastname, gender, age, COUNT(ageRange) AS AgeCount, edetails.profession, 
+COUNT(edetails.profession) AS ProfessionCount, wq_performance, hourlypay, hiringyear
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
-JOIN dbo.qualityperformance 
-ON
-employees.worker_ID = qualityperformance.worker_ID
-WHERE employees.worker_ID IN (4, 13)
-GROUP BY employees.worker_ID, firstname, lastname, age, edetails.profession, hourlypay, hiringyear
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID
+WHERE ageRange = 'adultW' AND wq_performance < 4
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    -- 1 da 2, 1 da 3 (33, 53)
+ORDER BY wq_performance DESC
+
+--5 persone con 3, 3 con 2
+
+
+
+
+SELECT employees.worker_ID, firstname, lastname, gender, age, COUNT(ageRange) AS AgeCount, edetails.profession, 
+COUNT(edetails.profession) AS ProfessionCount, wq_performance, hourlypay, hiringyear
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID
+WHERE ageRange = 'youngW' AND wq_performance < 4
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
+ORDER BY wq_performance DESC
+-- 1 con 3
 
 
 
 
 
+-- dopo aver analizzato vediamo quanti sono i due di performance
+SELECT employees.worker_ID, firstname, lastname, gender, age, edetails.profession, 
+COUNT(edetails.profession) AS ProfessionCount, wq_performance, hourlypay, hiringyear
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID
+WHERE wq_performance < 3
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
+ORDER BY wq_performance DESC   -- 5 persone (3 cw, 1 carp, 1 paint)
+
+
+
+
+--analizziamo per professione quanti sono i -4 di performance e se c'è almeno 1 con esperienza e uno giovane per ogni professione
+
+SELECT profession, COUNT(profession)
+FROM dbo.edetails
+GROUP BY profession
+ORDER BY profession
+
+
+SELECT employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID
+WHERE wq_performance = 3
+GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
+ORDER BY profession DESC   
+
+-- 3 painter, 2 elettr,  2 carp, 9 cw
+
+SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID 
+GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession  
+ORDER BY edetails.profession DESC
+  
+-- carpentieri e painter sembrano quelli con pochi giovani
+
+
+
+
+-- analizziamo se i supervisors vanno bene e se non vanno bene analizziamo che lavoratori sono stati analizzati da questi
+SELECT supervisors.supervisor_ID, employees.worker_ID, employees.firstname, employees.lastname, gender, age, edetails.profession,
+wq_performance
+FROM dbo.supervisors JOIN dbo.employees
+ON supervisors.worker_ID = employees.worker_ID
+JOIN dbo.edetails
+ON supervisors.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON supervisors.worker_ID = qualityperformance.worker_ID
+GROUP BY supervisors.supervisor_ID, employees.worker_ID, employees.firstname, employees.lastname, gender, age, edetails.profession,
+wq_performance
+ORDER BY edetails.profession DESC
+
+-- spID 7 wd 28 elettrico da cambiare
+-- spID 11 wd 59 cw da cambiare
+
+SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID 
+WHERE supervisor_ID = 7
+GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
+ORDER BY edetails.profession DESC
+  
+-- workerID 74 possibie sostituto con 5 di performance e adult assunto dal 2021
+
+
+SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
+FROM dbo.employees JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID 
+WHERE supervisor_ID = 11
+GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
+ORDER BY edetails.profession DESC
+
+-- valutati tutti con 4 e su con possibile sostituto workerID 56 con 5 di performance middle assunto nel 2018
+
+
+SELECT employees.worker_ID, 
+       employees.firstname, 
+	   employees.lastname, 
+	   gender, 
+	   age, 
+	   ageRange, 
+	   hourlypay, 
+	   edetails.profession,
+	   qualityperformance.hiringyear, 
+	   wq_performance, 
+	   qualityperformance.supervisor_ID
+FROM dbo.employees 
+JOIN dbo.edetails
+ON employees.worker_ID = edetails.worker_ID
+JOIN dbo.qualityperformance
+ON employees.worker_ID = qualityperformance.worker_ID
+GROUP BY employees.worker_ID, 
+       employees.firstname, 
+	   employees.lastname, 
+	   gender, 
+	   age, 
+	   ageRange, 
+	   hourlypay, 
+	   edetails.profession,
+	   qualityperformance.hiringyear, 
+	   wq_performance, 
+	   qualityperformance.supervisor_ID
