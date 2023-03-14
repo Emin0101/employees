@@ -1,28 +1,3 @@
-- tabella di dipendenti con nome, cognome, data di nascita, età, sesso e employee_id
-- tabella con employee_id, specializzazione, , data di assunzione, stipendio all'ora
-
-
-
-- tabella con ore di lavoro di 2 anni con equivalente stipendio mensile, employee_id 
-- tabella con supervisori dei lavoratori (10) supervisor_id, che sarebbe un employye_id nella tabella principale. specializzazione. assegnare un supervisor  
-  ai lavoratori in base alla specializzazione e trovare un modo di aggiungere una colonna con valutazione lavoro da 1 (da licenziare) a 5 (da premiare)
-
-- mettere le colonne in posizioni strane (data di assunzione dopo nome e prima di cognome)
-
-AGGIUNGERE FORSE L'ATTRITION RATE
-
-
-
-- obbiettivo dell'analisi potrebbe essere il volere dei soci fondatori di aumentare lo stipendio per i lavoratori con più ore e diminuire quelli con meno ore e con più 
-  richieste di ferie. in base anche alla valutazione dei supervisor. Alla fine una delle conclusioni a cui si arriverà sarà quella di dover aggiungere 1 o 2 supervisor
-  per essere sicuri che le loro valutazioni siano più sicure possibile. ovviamente le persone a cui accadrà ciò saranno le persone assunte da almeno 1 anno
-- valutare in generale il lavoro delle persone e capire se c'è bisogno di far fuori e di conseguenza assumere personale
- 
- 
-
-
-
-use SQLproject;
 
 CREATE TABLE employees(
 
