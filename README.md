@@ -24,3 +24,20 @@ This report details my findings and recommendations based on the analysis of the
 1. The first step will be creating the data. You can find the process in the skeleton.
 2. The second step will be cleaning the data and joining the tables in order to create a table with all the data we will need to continue the project on Power BI.
    
+
+## Skeleton Section
+We will create 4 tables:
+- edetails
+- employees
+- qualityperformance
+- supervisors
+
+The first table will be contain worker_ID, hourlypay, hiringyear, hiringmonth, hiringday and profession.
+The second table will be containing worker_ID, firstname, dateofbirth, age, lastname and gender.
+The third table will be containing worker_ID, hiringyear, wq_performance (worker quality performance), profession and supervisor_ID (the supervisor that gave the evaluation to the worker).
+The final table will be containing supervisor_ID, worker_ID (every supervisor has also a worker_ID), firstname, lastname and profession.
+
+As you can see in addition to the normal workers there will be supervisors whose task will be to evaluate the quality of the workers' performance. To each worker is assigned a supervisor (exept for the secretaries and the project manager) that works in the same field of the worker that he/she has the job to supervise.
+
+
+
