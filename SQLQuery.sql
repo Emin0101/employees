@@ -232,9 +232,8 @@ ORDER BY wq_performance DESC
 
 
 
-
---analizziamo per professione quanti sono i -4 di performance e se c'è almeno 1 con esperienza e uno giovane per ogni professione
-
+-- now we decide to check for each profession how many 3 wq_performance there are
+-- we start by checking how many professions are there in the company  
 SELECT profession, COUNT(profession)
 FROM dbo.edetails
 GROUP BY profession
@@ -249,9 +248,11 @@ ON employees.worker_ID = qualityperformance.worker_ID
 WHERE wq_performance = 3
 GROUP BY employees.worker_ID, firstname, lastname, gender, age, edetails.profession, wq_performance, hourlypay, hiringyear    
 ORDER BY profession DESC   
+-- 3 painters, 2 electricians,  2 carpenters and 9 construction workers
 
--- 3 painter, 2 elettr,  2 carp, 9 cw
 
+
+-- now we check by profession which type of specialization is in need for younger workers
 SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
@@ -259,13 +260,15 @@ JOIN dbo.qualityperformance
 ON employees.worker_ID = qualityperformance.worker_ID 
 GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession  
 ORDER BY edetails.profession DESC
-  
--- carpentieri e painter sembrano quelli con pochi giovani
+-- we notice that there is a lack of younger carpenters and painters
 
 
 
 
--- analizziamo se i supervisors vanno bene e se non vanno bene analizziamo che lavoratori sono stati analizzati da questi
+
+
+-- now we are going to check the wq_performance of the supervisors and if any of them has a low evaluation we will check which workers did they supervise
+-- in order to do that we will have to join all tables, we will join them all by the worker_ID column
 SELECT supervisors.supervisor_ID, employees.worker_ID, employees.firstname, employees.lastname, gender, age, edetails.profession,
 wq_performance
 FROM dbo.supervisors JOIN dbo.employees
@@ -277,10 +280,12 @@ ON supervisors.worker_ID = qualityperformance.worker_ID
 GROUP BY supervisors.supervisor_ID, employees.worker_ID, employees.firstname, employees.lastname, gender, age, edetails.profession,
 wq_performance
 ORDER BY edetails.profession DESC
+-- we found out that the supervisor_ID 7, electrician, has a 3 wq_performance
+-- and the supervisor_ID 11, construction worker, has also a 3 wq_performance
 
--- spID 7 wd 28 elettrico da cambiare
--- spID 11 wd 59 cw da cambiare
 
+
+-- we check which workers did the supervisor_ID 7 supervise
 SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
@@ -289,10 +294,11 @@ ON employees.worker_ID = qualityperformance.worker_ID
 WHERE supervisor_ID = 7
 GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
 ORDER BY edetails.profession DESC
-  
--- workerID 74 possibie sostituto con 5 di performance e adult assunto dal 2021
+-- we notice that there's a worker with 5 wq_performance hired in 2021 that can take the place of the supervisor_ID 7
 
 
+
+-- we check which workers did the supervisor_ID 11 supervise
 SELECT employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
 FROM dbo.employees JOIN dbo.edetails
 ON employees.worker_ID = edetails.worker_ID
@@ -301,10 +307,20 @@ ON employees.worker_ID = qualityperformance.worker_ID
 WHERE supervisor_ID = 11
 GROUP BY employees.worker_ID, firstname, lastname, gender, ageRange, edetails.profession, wq_performance, hiringyear
 ORDER BY edetails.profession DESC
+-- we notice that there's a worker with 5 wq_performance hired in 2018 that can take the place of the supervisor_ID 11
 
--- valutati tutti con 4 e su con possibile sostituto workerID 56 con 5 di performance middle assunto nel 2018
 
 
+
+
+-- so far we discovered that there are quite a few workers with a quality of performance evaluated at 3 and a few also with a evaluation of 2
+-- we noticed that there is a lack in younger workers mostly in the carpenter and painter field 
+-- we discovered which supervisors need to be changed and we found good substitutes 
+
+
+
+-- now fo further evaluation of the data we will move the analysis to Power BI
+-- to do that we will need a single table with all the data that we will need 
 SELECT employees.worker_ID, 
        employees.firstname, 
 	   employees.lastname, 
