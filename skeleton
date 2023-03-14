@@ -1,4 +1,5 @@
 
+
 CREATE TABLE employees(
 
     worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
@@ -31,33 +32,26 @@ CREATE TABLE supervisors(
     supervisor_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	worker_ID INT,
 	firstname NVARCHAR(50),
-	lastname NVARCHAR(50)
+	lastname NVARCHAR(50),
+	profession NVARCHAR(100) NOT NULL
 
 )
 
 
--- add the job types
-
-ALTER TABLE supervisors
-ADD CONSTRAINT fk_worker
-FOREIGN KEY (worker_ID) REFERENCES employees(worker_ID)
-
-ALTER TABLE workersdetails
-ADD profession NVARCHAR(100) NOT NULL
 
 
 
+CREATE TABLE qualityperformance (
+
+    worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+	hiringyear NVARCHAR(50) NOT NULL,
+	wq_performance INT,
+	profession NVARCHAR(100),
+	supervisor_ID INT 
+
+)
 
 
-
-SELECT *
-FROM employees
-
-SELECT *
-FROM workersdetails
-
-SELECT *
-FROM supervisors
 
 
 
@@ -233,17 +227,18 @@ VALUES ('12', '08', 19.25, '2018', 'Painter'),
 
 
 INSERT INTO dbo.supervisors
-VALUES (35, 'Max', 'Murphy', 'Architect'),
+VALUES (2, 'James', 'Anderson',	'Carpenter'),
+       (9, 'Samuel', 'Howard', 'Project Manager'),
+       (24, 'Anne', 'Peterson', 'Safety Manager'),
+       (38, 'Marika', 'Smith', 'Engineer'),
+       (51, 'Chris', 'Davis', 'Construction Worker'),
+       (73, 'Cameron', 'Burton', 'Construction Worker'),
+       (28, 'Peter', 'Burton', 'Electrician'), 
+       (1, 'Thomas', 'Martinez', 'Painter'),
+       (67, 'Ryan', 'Gutierrez', 'Plumber'),
+       (35, 'Max', 'Murphy', 'Architect'),
        (59, 'Billy', 'Wright', 'Construction Worker'),
-	   (52, 'Jacob', 'Brown', 'Construction Worker')
-
-
-
-SELECT edetails.worker_ID, age, hourlypay, firstname, lastname
-FROM dbo.edetails JOIN  dbo.employees
-ON edetails.worker_ID = employees.worker_ID
-WHERE profession = 'Construction Worker' AND hiringyear = 2018
-ORDER BY age DESC
+       (52, 'Jacob', 'Brown', 'Construction Worker')
 
 
 
@@ -252,33 +247,17 @@ ORDER BY age DESC
 
 
 
---creare una tabella con i worker_ID dei lavoratori, anno di assunzione, professione, rating da 1 a 5
---il supervisor_ID che l'ha valutato
---rating nullo per i lavoratori assunti nel 2022
 
 
 
 
-CREATE TABLE qualityperformance (
-
-    worker_ID INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	hiringyear NVARCHAR(50) NOT NULL,
-	wq_performance INT,
-	profession NVARCHAR(100),
-	supervisor_ID INT 
-
-)
-
-SELECT *
-FROM dbo.qualityperformance
 
 
 
 
-select profession, count(profession) as Nprofession
-from dbo.edetails
-group by profession
-order by Nprofession desc
+
+
+
 
 
 
