@@ -39,5 +39,5 @@ The final table will be containing supervisor_ID, worker_ID (every supervisor ha
 
 As you can see in addition to the normal workers there will be supervisors whose task will be to evaluate the quality of the workers' performance. To each worker is assigned a supervisor (exept for the secretaries and the project manager) that works in the same field of the worker that he/she has the job to supervise.
 
-
+- The tables will be created with errors so that they will be cleaned by me afterwards
 
